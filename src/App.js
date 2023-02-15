@@ -1,10 +1,10 @@
 import "./App.css";
-import Input from "./components/Input/Input";
+import InputPassword from "./components/InputPassword/InputPassword";
 
 function App() {
   return (
     <div className="App">
-      <Input />
+      <InputPassword />
     </div>
   );
 }
