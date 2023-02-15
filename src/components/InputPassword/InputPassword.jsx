@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import "./InputPassword.scss";
 import { green, grey, red, yellow } from "../../constants/colors";
 import { digits, letters, symbols } from "../../constants/regExp";
 
+import "./InputPassword.scss";
 import Input from "../Input/Input";
 
 const InputPassword = () => {
