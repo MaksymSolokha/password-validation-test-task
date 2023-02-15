@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import "./InputPassword.scss";
 import { green, grey, red, yellow } from "../../constants/colors";
-import Input from "../Input/Input";
 import { digits, letters, symbols } from "../../constants/regExp";
+
+import Input from "../Input/Input";
 
 const InputPassword = () => {
   const [inputPassword, setInputPassword] = useState("");
