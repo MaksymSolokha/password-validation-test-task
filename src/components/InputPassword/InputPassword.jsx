@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import "./InputPassword.scss";
-import {
-  digits,
-  green,
-  grey,
-  letters,
-  red,
-  symbols,
-  yellow,
-} from "../../constants/constants";
+import { green, grey, red, yellow } from "../../constants/colors";
 import Input from "../Input/Input";
+import { digits, letters, symbols } from "../../constants/regExp";
 
 const InputPassword = () => {
   const [inputPassword, setInputPassword] = useState("");
@@ -20,55 +13,58 @@ const InputPassword = () => {
     strong: grey,
   });
 
+  const emptyPassword = inputPassword.length === 0;
+  const shortPassword = inputPassword.length <= 8;
+  const easyPassword =
+    letters.test(inputPassword) ||
+    digits.test(inputPassword) ||
+    symbols.test(inputPassword);
+  const mediumPassword =
+    (letters.test(inputPassword) && symbols.test(inputPassword)) ||
+    (letters.test(inputPassword) && digits.test(inputPassword)) ||
+    (digits.test(inputPassword) && symbols.test(inputPassword));
+  const strongPassword =
+    letters.test(inputPassword) &&
+    digits.test(inputPassword) &&
+    symbols.test(inputPassword);
+
   useEffect(() => {
-    if (inputPassword === "") {
+    if (emptyPassword) {
       setPasswordColor({
         easy: grey,
         medium: grey,
         strong: grey,
       });
-    } else {
-      if (inputPassword.length <= 8) {
-        setPasswordColor({
-          easy: red,
-          medium: red,
-          strong: red,
-        });
-      } else {
-        if (
-          letters.test(inputPassword) ||
-          digits.test(inputPassword) ||
-          symbols.test(inputPassword)
-        ) {
-          setPasswordColor({
-            easy: red,
-            medium: grey,
-            strong: grey,
-          });
-        }
-        if (
-          (letters.test(inputPassword) && symbols.test(inputPassword)) ||
-          (letters.test(inputPassword) && digits.test(inputPassword)) ||
-          (digits.test(inputPassword) && symbols.test(inputPassword))
-        ) {
-          setPasswordColor({
-            easy: yellow,
-            medium: yellow,
-            strong: grey,
-          });
-        }
-        if (
-          letters.test(inputPassword) &&
-          digits.test(inputPassword) &&
-          symbols.test(inputPassword)
-        ) {
-          setPasswordColor({
-            easy: green,
-            medium: green,
-            strong: green,
-          });
-        }
-      }
+      return;
+    }
+    if (shortPassword) {
+      setPasswordColor({
+        easy: red,
+        medium: red,
+        strong: red,
+      });
+      return;
+    }
+    if (easyPassword) {
+      setPasswordColor({
+        easy: red,
+        medium: grey,
+        strong: grey,
+      });
+    }
+    if (mediumPassword) {
+      setPasswordColor({
+        easy: yellow,
+        medium: yellow,
+        strong: grey,
+      });
+    }
+    if (strongPassword) {
+      setPasswordColor({
+        easy: green,
+        medium: green,
+        strong: green,
+      });
     }
   }, [inputPassword]);
 
